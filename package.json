@@ -1,0 +1,24 @@
+{
+  "name": "q-and-a",
+  "version": "1.0.0",
+  "description": "SDC",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/The-Transplants/q-and-a.git"
+  },
+  "author": "Lunghao Lee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/The-Transplants/q-and-a/issues"
+  },
+  "homepage": "https://github.com/The-Transplants/q-and-a#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^8.7.1"
+  }
+}
