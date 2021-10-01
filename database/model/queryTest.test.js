@@ -4,7 +4,7 @@ it('should return an array of objects with the correct properties', async ()=>{
   await questions.queryById(44388)
   .then( ({rows}) => {
     let result  = rows[0].jsonb_build_object;
-
+    console.log(result);
     [
       ['question_id', 'number'],
       ['question_body', 'string'],
