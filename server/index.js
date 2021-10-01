@@ -17,8 +17,3 @@ app.use('/', router);
 app.listen(port, () => {
   console.log('Listening on http://localhost:' + port + '/');
 });
-
-// pool.query('SELECT NOW();', (err, res) => {
-//   console.log(err, res.rows);
-//   pool.end();
-// })

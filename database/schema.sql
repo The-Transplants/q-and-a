@@ -34,3 +34,28 @@ CREATE TABLE Photos(
 \COPY Answers FROM '/Users/lunghaolee/Downloads/SDC Application Data - Atelier Project (_Clean_ Data Set)/answers.csv' DELIMITER ',' CSV HEADER;
 \COPY Photos FROM '/Users/lunghaolee/Downloads/SDC Application Data - Atelier Project (_Clean_ Data Set) 2/answers_photos.csv' DELIMITER ',' CSV HEADER;
 
+ SELECT jsonb_build_object(
+ 'question_id', question_id,
+ 'question_body', question_body,
+ 'question_date', question_date,
+ 'asker_name', asker_name,
+ 'helpfulness', question_helpfulness,
+ 'reported', reported
+
+  )  FROM questions WHERE product_id = 44388;
+
+
+
+
+
+
+
+   'answers', (SELECT jsonb_build_object(
+   answer_id, (SELECT jsonb_build_object(
+      'id', id,
+      'body', photo_url,
+      'date',
+      'answer_name',
+      'helpfulness',
+      'photo', )
+     FROM answers WHERE question_id = question_id)))
