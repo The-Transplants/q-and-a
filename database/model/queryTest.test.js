@@ -1,16 +1,16 @@
 const questions = require('./questions.js');
 
 it('should return an array of objects with the correct properties', async ()=>{
-  questions.queryById(44388)
+  await questions.queryById(44388)
   .then( ({rows}) => {
-    let result  = rows[0];
+    let result  = rows[0].jsonb_build_object;
 
     [
       ['question_id', 'number'],
       ['question_body', 'string'],
-      ['question_date', 'string'],
+      ['question_date', 'number'],
       ['asker_name', 'string'],
-      ['helpfulness', 'string'],
+      ['helpfulness', 'number'],
       ['reported', 'boolean']
 
     ].forEach( property =>{
