@@ -14,10 +14,10 @@ CREATE TABLE Questions(
 );
 
 CREATE TABLE Answers(
-  answers_id INT PRIMARY KEY NOT NULL,
+  answer_id INT PRIMARY KEY NOT NULL,
   question_id INT references Questions(question_id),
   body VARCHAR(500),
-  answer_date NUMERIC(20,0),
+  date NUMERIC(20,0),
   answerer_name VARCHAR(30),
   answerer_email VARCHAR(50),
   reported BOOLEAN,
@@ -26,7 +26,7 @@ CREATE TABLE Answers(
 
 CREATE TABLE Photos(
   id INT PRIMARY KEY NOT NULL,
-  answers_id INT references Answers(answers_id),
+  answer_id INT references Answers(answer_id),
   photos_url VARCHAR(500)
 );
 
@@ -34,28 +34,7 @@ CREATE TABLE Photos(
 \COPY Answers FROM '/Users/lunghaolee/Downloads/SDC Application Data - Atelier Project (_Clean_ Data Set)/answers.csv' DELIMITER ',' CSV HEADER;
 \COPY Photos FROM '/Users/lunghaolee/Downloads/SDC Application Data - Atelier Project (_Clean_ Data Set) 2/answers_photos.csv' DELIMITER ',' CSV HEADER;
 
- SELECT jsonb_build_object(
- 'question_id', question_id,
- 'question_body', question_body,
- 'question_date', question_date,
- 'asker_name', asker_name,
- 'helpfulness', question_helpfulness,
- 'reported', reported
-
-  )  FROM questions WHERE product_id = 44388;
 
 
 
 
-
-
-
-   'answers', (SELECT jsonb_build_object(
-   answer_id, (SELECT jsonb_build_object(
-      'id', id,
-      'body', photo_url,
-      'date',
-      'answer_name',
-      'helpfulness',
-      'photo', )
-     FROM answers WHERE question_id = question_id)))

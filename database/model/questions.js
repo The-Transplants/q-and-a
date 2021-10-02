@@ -12,15 +12,15 @@ module.exports = {
       question_helpfulness,
       reported,
       (SELECT jsonb_object_agg(
-        answers_id, json_build_object(
-          'id', answers_id,
+        answer_id, json_build_object(
+          'id', answer_id,
           'body', body ,
-          'date', answer_date,
+          'date', date,
           'answerer_name', answerer_name,
           'helpfulness', helpfulness,
           'photos',
           (SELECT array(
-            SELECT photos_url FROM photos WHERE photos.answers_id = answers.answers_id
+            SELECT photos_url FROM photos WHERE photos.answer_id = answers.answer_id
           ) )
         )
         )
