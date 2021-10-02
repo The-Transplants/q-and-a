@@ -5,8 +5,6 @@ module.exports = {
    return new Promise((resolve, reject) => {
      pool.query( `
      (SELECT
-
-
         answer_id,
         body ,
         date,
@@ -29,7 +27,24 @@ module.exports = {
      .then( data => resolve(data) )
      .catch( reject );
    });
- }
+ },
+ 'postAnswer': (question_id, body, name, email, photos) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `
+      SELECT setval('answers_answer_id_seq', (SELECT MAX(answer_id) from answers));
+    `)
+    .catch((err) => console.error(err));
+    pool.query(
+      `
+      INSERT INTO answers(body, answerer_name, answerer_email, question_id)
+      VALUES ($1, $2, $3, $4)
+    `, [body, name, email, question_id])
+
+    .then( data => resolve(data) )
+    .catch( reject );
+  });
+}
 
 }
 

@@ -26,5 +26,16 @@ module.exports = {
       res.sendStatus(200);
     })
     .catch( err => console.log(err));
+  },
+  'postAnswer': (req, res, next) => {
+    console.log(req.body);
+    console.log(req.params.question_id);
+    let{ question_id } = req.params;
+    let{ body, name, email, photos } = req.body;
+    answers.postAnswer( question_id, body, name, email, photos )
+    .then( data => {
+      res.sendStatus(200);
+    })
+    .catch( err => console.log(err));
   }
 }
