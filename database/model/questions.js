@@ -29,10 +29,30 @@ module.exports = {
      .then( data => resolve(data) )
      .catch( reject );
    });
- }
+ },
+
+ 'postQuestion': (product_id, body, name, email) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `
+      SELECT setval('questions_question_id_seq', (SELECT MAX(question_id) from questions));
+    `)
+    .catch((err) => console.error(err));
+    pool.query(
+      `
+     INSERT INTO questions(product_id, question_body, asker_name, asker_email)
+     VALUES ($1, $2, $3, $4)`, [product_id, body, name, email])
+
+    .then( data => resolve(data) )
+    .catch( reject );
+  });
+}
 
 }
 
+//  SELECT setval('questions_question_id_seq', (SELECT MAX(question_id) from questions))
 
+//      INSERT INTO questions(product_id, question_body, asker_name, asker_email)
+//      VALUES ($1, $2, $3, $4)
 
 

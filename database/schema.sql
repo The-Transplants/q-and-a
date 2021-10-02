@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS Answers cascade;
 DROP TABLE IF EXISTS Photos cascade;
 
 CREATE TABLE Questions(
-  question_id INT PRIMARY KEY NOT NULL,
+  question_id SERIAL PRIMARY KEY,
   product_id INT NOT NULL,
   question_body VARCHAR(500),
   question_date NUMERIC(20,0),
@@ -14,7 +14,7 @@ CREATE TABLE Questions(
 );
 
 CREATE TABLE Answers(
-  answer_id INT PRIMARY KEY NOT NULL,
+  answer_id SERIAL PRIMARY KEY,
   question_id INT references Questions(question_id),
   body VARCHAR(500),
   date NUMERIC(20,0),

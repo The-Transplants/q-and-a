@@ -17,5 +17,14 @@ module.exports = {
       res.status(200).send(data.rows);
     })
     .catch( err => console.log(err));
+  },
+  'postQuestion': (req, res, next) => {
+    console.log(req.body);
+    let { product_id, body, name, email } = req.body;
+    questions.postQuestion(product_id, body, name, email)
+    .then( data => {
+      res.sendStatus(200);
+    })
+    .catch( err => console.log(err));
   }
 }
