@@ -46,13 +46,20 @@ module.exports = {
     .then( data => resolve(data) )
     .catch( reject );
   });
+},
+
+'updateHelpful': (question_id) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `UPDATE questions SET question_helpfulness = question_helpfulness + 1 WHERE question_id = $1;`, [question_id])
+
+    .then( data => resolve(data) )
+    .catch( reject );
+  });
 }
 
 }
 
-//  SELECT setval('questions_question_id_seq', (SELECT MAX(question_id) from questions))
 
-//      INSERT INTO questions(product_id, question_body, asker_name, asker_email)
-//      VALUES ($1, $2, $3, $4)
 
 

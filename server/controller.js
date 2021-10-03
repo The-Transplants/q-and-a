@@ -28,11 +28,26 @@ module.exports = {
     .catch( err => console.log(err));
   },
   'postAnswer': (req, res, next) => {
-    console.log(req.body);
-    console.log(req.params.question_id);
     let{ question_id } = req.params;
     let{ body, name, email, photos } = req.body;
     answers.postAnswer( question_id, body, name, email, photos )
+    .then( data => {
+      res.sendStatus(200);
+    })
+    .catch( err => console.log(err));
+  },
+  'updateQuestionHelpful': (req, res, next) => {
+    let{ question_id } = req.params;
+    questions.updateHelpful( question_id )
+    .then( data => {
+      res.sendStatus(200);
+    })
+    .catch( err => console.log(err));
+  },
+  'updateAnswerHelpful': (req, res, next) => {
+    console.log(req.params.answer_id);
+    let{ answer_id } = req.params;
+    answers.updateHelpful( answer_id )
     .then( data => {
       res.sendStatus(200);
     })

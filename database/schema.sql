@@ -25,7 +25,7 @@ CREATE TABLE Answers(
 );
 
 CREATE TABLE Photos(
-  id INT PRIMARY KEY NOT NULL,
+  id SERIAL PRIMARY KEY,
   answer_id INT references Answers(answer_id),
   photos_url VARCHAR(500)
 );
