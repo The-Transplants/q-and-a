@@ -67,6 +67,15 @@ module.exports = {
       .then( data => resolve(data) )
       .catch( reject );
     });
+  },
+  'updateReport': (answer_id) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `UPDATE answers SET reported = true WHERE answer_id = $1;`, [answer_id])
+
+      .then( data => resolve(data) )
+      .catch( reject );
+    });
   }
 
 }
