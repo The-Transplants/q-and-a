@@ -1,6 +1,9 @@
 DROP TABLE IF EXISTS Questions cascade;
 DROP TABLE IF EXISTS Answers cascade;
 DROP TABLE IF EXISTS Photos cascade;
+DROP INDEX IF EXISTS questions_id_index;
+DROP INDEX IF EXISTS answers_id_index;
+DROP INDEX IF EXISTS photos_id_index;
 
 CREATE TABLE Questions(
   question_id SERIAL PRIMARY KEY,
@@ -13,6 +16,9 @@ CREATE TABLE Questions(
   question_helpfulness INT
 );
 
+CREATE INDEX questions_id_index ON Questions(question_id, product_id );
+
+
 CREATE TABLE Answers(
   answer_id SERIAL PRIMARY KEY,
   question_id INT references Questions(question_id),
@@ -24,11 +30,17 @@ CREATE TABLE Answers(
   helpfulness INT
 );
 
+CREATE INDEX answers_id_index ON answers(answer_id, question_id);
+
+
 CREATE TABLE Photos(
   id SERIAL PRIMARY KEY,
   answer_id INT references Answers(answer_id),
   photos_url VARCHAR(500)
 );
+
+CREATE INDEX photos_id_index ON photos(id, answer_id);
+
 
 \COPY Questions FROM '/Users/lunghaolee/Downloads/SDC Application Data - Atelier Project (_Clean_ Data Set) 2/questions.csv' DELIMITER ',' CSV HEADER;
 \COPY Answers FROM '/Users/lunghaolee/Downloads/SDC Application Data - Atelier Project (_Clean_ Data Set)/answers.csv' DELIMITER ',' CSV HEADER;

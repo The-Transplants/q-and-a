@@ -26,7 +26,12 @@ module.exports = {
         )
        AS answers FROM answers WHERE answers.question_id = questions.question_id)
       FROM questions WHERE product_id = $1`, [product_id])
-     .then( data => resolve(data) )
+     .then( data => {
+      let result = {
+        "product_id": product_id,
+        "results": data.rows
+      };
+      return resolve(result)} )
      .catch( reject );
    });
  },

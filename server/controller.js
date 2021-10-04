@@ -4,9 +4,9 @@ const answers = require('../database/model/answers.js');
 module.exports = {
   'getQuestions': (req, res, next) => {
     questions.queryById(req.query.product_id)
-      .then(data => {
-        console.log(data.rows);
-        res.status(200).send(data.rows);
+      .then(result => {
+        console.log(result);
+        res.status(200).send(result);
       })
       .catch(err => console.log(err));
   },
