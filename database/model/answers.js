@@ -1,7 +1,7 @@
 const { pool } = require('../');
 module.exports = {
 
-  'queryById': (question_id) => {
+  'queryById': (question_id, page = 1, count = 5) => {
     return new Promise((resolve, reject) => {
       pool.query(`
      (SELECT
@@ -22,9 +22,18 @@ module.exports = {
         )
 
 
-   FROM answers WHERE answers.question_id = $1)
-     `, [question_id])
-        .then(data => resolve(data))
+   FROM answers WHERE answers.question_id = $1
+   LIMIT $2)
+     `, [question_id, (page * count)])
+        .then(data => {
+          let result = {
+            "question": question_id,
+            "page": page,
+            "count": parseInt(count),
+            "results": data.rows
+          };
+          return resolve(result)
+        })
         .catch(reject);
     });
   },

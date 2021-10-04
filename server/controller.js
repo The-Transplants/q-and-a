@@ -11,10 +11,10 @@ module.exports = {
       .catch(err => console.log(err));
   },
   'getAnswers': (req, res, next) => {
-    answers.queryById(req.params.question_id)
-      .then(data => {
-        console.log(data.rows);
-        res.status(200).send(data.rows);
+    answers.queryById(req.params.question_id, req.query.page, req.query.count)
+      .then(result => {
+        console.log(result);
+        res.status(200).send(result);
       })
       .catch(err => console.log(err));
   },
