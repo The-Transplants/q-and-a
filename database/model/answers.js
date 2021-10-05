@@ -52,7 +52,7 @@ module.exports = {
         )
         .catch((err) => console.error(err));
         pool.query(
-        ` INSERT INTO photos(url)
+        ` INSERT INTO photos(photos_url)
           VALUES ($1)`, [photos[i]])
       .catch((err) => console.error(err));
       }
