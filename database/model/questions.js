@@ -40,7 +40,7 @@ module.exports = {
   return new Promise((resolve, reject) => {
     pool.query(
       `
-      SELECT setval('questions_question_id_seq', (SELECT MAX(question_id) from questions));
+      SELECT setval('Questions_question_id_seq', (SELECT MAX(question_id) from questions));
     `)
     .catch((err) => console.error(err));
 
