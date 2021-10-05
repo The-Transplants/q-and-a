@@ -16,9 +16,9 @@ module.exports = {
              SELECT jsonb_build_object(
                 'id', id,
                 'url', photos_url
-              )
+              ) FROM photos WHERE photos.answer_id = answers.answer_id
           )
-        AS photos FROM photos WHERE photos.answer_id = answers.answer_id
+        AS photos
         )
 
 
