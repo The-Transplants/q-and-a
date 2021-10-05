@@ -40,41 +40,38 @@ module.exports = {
   'postAnswer': (question_id, body, name, email, photos) => {
     return new Promise((resolve, reject) => {
       pool.query(
-        `
-      SELECT setval('answers_answer_id_seq', (SELECT MAX(answer_id) from answers));
-    `)
+        `SELECT setval('answers_answer_id_seq', (SELECT MAX(answer_id) from answers));`
+      )
         .catch((err) => console.error(err));
-
-      // photo Insert
-      for (let i = 0; i < photos.length; i++) {
-        pool.query(
-        `SELECT setval('photos_id_seq', (SELECT MAX(id) from photos));`
-        )
-        .catch((err) => console.error(err));
-        pool.query(
-        ` INSERT INTO photos(photos_url)
-          VALUES ($1)`, [photos[i]])
-      .catch((err) => console.error(err));
-      }
 
       pool.query(
-      `
-      INSERT INTO answers(body, answerer_name, answerer_email, question_id)
-      VALUES ($1, $2, $3, $4)
-      `
-      , [body, name, email, question_id])
-
-        .then(data => resolve(data))
-        .catch(reject);
+        `INSERT INTO answers(body, answerer_name, answerer_email, question_id)
+          VALUES ($1, $2, $3, $4)`
+        , [body, name, email, question_id])
+        .catch((err) => console.error(err)
+      );
+    // photo Insert
+      for (let i = 0; i < photos.length; i++) {
+        pool.query(
+          `SELECT setval('photos_id_seq', (SELECT MAX(id) from photos));`
+        )
+          .catch((err) => console.error(err));
+        pool.query(
+          ` INSERT INTO photos(photos_url, answer_id)
+            VALUES ($1, (SELECT MAX(answer_id) from answers))`, [photos[i]])
+          .catch((err) => console.error(err));
+      }
+      resolve();
     });
+
   },
   'updateHelpful': (answer_id) => {
     return new Promise((resolve, reject) => {
       pool.query(
         `UPDATE answers SET helpfulness = helpfulness + 1 WHERE answer_id = $1;`, [answer_id])
 
-      .then( data => resolve(data) )
-      .catch( reject );
+        .then(data => resolve(data))
+        .catch(reject);
     });
   },
   'updateReport': (answer_id) => {
@@ -82,8 +79,8 @@ module.exports = {
       pool.query(
         `UPDATE answers SET reported = true WHERE answer_id = $1;`, [answer_id])
 
-      .then( data => resolve(data) )
-      .catch( reject );
+        .then(data => resolve(data))
+        .catch(reject);
     });
   }
 

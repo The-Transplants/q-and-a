@@ -20,7 +20,7 @@ module.exports = {
     let { product_id, body, name, email } = req.body;
     questions.postQuestion(product_id, body, name, email)
       .then(data => {
-        res.sendStatus(201).send('CREATED');
+        res.sendStatus(201);
       })
       .catch(err => console.log(err));
   },
@@ -29,7 +29,7 @@ module.exports = {
     let { body, name, email, photos } = req.body;
     answers.postAnswer(question_id, body, name, email, photos)
       .then(data => {
-        res.sendStatus(201).send('CREATED');
+        res.sendStatus(201);
       })
       .catch(err => console.log(err));
   },

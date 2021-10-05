@@ -43,6 +43,7 @@ module.exports = {
       SELECT setval('questions_question_id_seq', (SELECT MAX(question_id) from questions));
     `)
     .catch((err) => console.error(err));
+
     pool.query(
       `
      INSERT INTO questions(product_id, question_body, asker_name, asker_email)

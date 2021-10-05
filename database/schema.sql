@@ -16,7 +16,7 @@ CREATE TABLE Questions(
   question_helpfulness INT
 );
 
-CREATE INDEX questions_id_index ON Questions(question_id, product_id );
+CREATE INDEX questions_id_index ON Questions(product_id );
 
 
 CREATE TABLE Answers(
@@ -30,7 +30,7 @@ CREATE TABLE Answers(
   helpfulness INT
 );
 
-CREATE INDEX answers_id_index ON answers(answer_id, question_id);
+CREATE INDEX answers_id_index ON answers(question_id);
 
 
 CREATE TABLE Photos(
@@ -39,7 +39,7 @@ CREATE TABLE Photos(
   photos_url VARCHAR(500)
 );
 
-CREATE INDEX photos_id_index ON photos(id, answer_id);
+CREATE INDEX photos_id_index ON photos(answer_id);
 
 
 \COPY Questions FROM '/Users/lunghaolee/Downloads/SDC Application Data - Atelier Project (_Clean_ Data Set) 2/questions.csv' DELIMITER ',' CSV HEADER;
