@@ -42,26 +42,29 @@ module.exports = {
       pool.query(
         `SELECT setval('answers_answer_id_seq', (SELECT MAX(answer_id) from answers));`
       )
-        .catch((err) => console.error(err));
+        .then((data)=>{
+          return (pool.query(
+            `INSERT INTO answers(body, answerer_name, answerer_email, question_id)
+              VALUES ($1, $2, $3, $4)`
+            , [body, name, email, question_id]))
+          }
+          )
+        .then((data) => {
+          for (let i = 0; i < photos.length; i++) {
+            pool.query(
+              `SELECT setval('photos_id_seq', (SELECT MAX(id) from photos));`
+            ).then((data) => {
+              return (pool.query(
+                ` INSERT INTO photos(photos_url, answer_id)
+                  VALUES ($1, (SELECT MAX(answer_id) from answers))`, [photos[i]])
+                  )
+            })
+            .catch((err) => console.error(err));
+          }
+          resolve();
+        })
+        .catch((err) => reject());
 
-      pool.query(
-        `INSERT INTO answers(body, answerer_name, answerer_email, question_id)
-          VALUES ($1, $2, $3, $4)`
-        , [body, name, email, question_id])
-        .catch((err) => console.error(err)
-      );
-    // photo Insert
-      for (let i = 0; i < photos.length; i++) {
-        pool.query(
-          `SELECT setval('photos_id_seq', (SELECT MAX(id) from photos));`
-        )
-          .catch((err) => console.error(err));
-        pool.query(
-          ` INSERT INTO photos(photos_url, answer_id)
-            VALUES ($1, (SELECT MAX(answer_id) from answers))`, [photos[i]])
-          .catch((err) => console.error(err));
-      }
-      resolve();
     });
 
   },
