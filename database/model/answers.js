@@ -37,16 +37,16 @@ module.exports = {
         .catch(reject);
     });
   },
-  'postAnswer': (question_id, body, name, email, photos = []) => {
+  'postAnswer': (question_id, body, name, email, photos = [], helpfulness = 0, reported = false) => {
     return new Promise((resolve, reject) => {
       pool.query(
         `SELECT setval('answers_answer_id_seq', (SELECT MAX(answer_id) from answers));`
       )
         .then((data) => {
           return (pool.query(
-            `INSERT INTO answers(body, answerer_name, answerer_email, question_id)
-              VALUES ($1, $2, $3, $4)`
-            , [body, name, email, question_id])
+            `INSERT INTO answers(body, answerer_name, answerer_email, question_id, helpfulness, reported)
+              VALUES ($1, $2, $3, $4, $5, $6)`
+            , [body, name, email, question_id, helpfulness, reported])
             .catch(err => console.error(err))
           )
         }

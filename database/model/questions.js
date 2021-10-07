@@ -36,7 +36,7 @@ module.exports = {
    });
  },
 
- 'postQuestion': (product_id, body, name, email) => {
+ 'postQuestion': (product_id, body, name, email, helpfulness = 0, reported = false) => {
   return new Promise((resolve, reject) => {
     pool.query(
       `SELECT setval('Questions_question_id_seq', (SELECT MAX(question_id) from questions));`
@@ -45,8 +45,8 @@ module.exports = {
         return (
           pool.query(
             `
-           INSERT INTO questions(product_id, question_body, asker_name, asker_email)
-           VALUES ($1, $2, $3, $4)`, [product_id, body, name, email])
+           INSERT INTO questions(product_id, question_body, asker_name, asker_email, question_helpfulness, reported)
+           VALUES ($1, $2, $3, $4, $5, $6)`, [product_id, body, name, email, helpfulness, reported])
            .catch(err => console.error(err))
         )
       })
