@@ -47,7 +47,8 @@ module.exports = {
             `
            INSERT INTO questions(product_id, question_body, asker_name, asker_email)
            VALUES ($1, $2, $3, $4)`, [product_id, body, name, email])
-        ).catch(err => console.error(err))
+           .catch(err => console.error(err))
+        )
       })
       .then( data => resolve() )
       .catch( err => reject() );

@@ -37,18 +37,20 @@ module.exports = {
         .catch(reject);
     });
   },
-  'postAnswer': (question_id, body, name, email, photos) => {
+  'postAnswer': (question_id, body, name, email, photos = []) => {
     return new Promise((resolve, reject) => {
       pool.query(
         `SELECT setval('answers_answer_id_seq', (SELECT MAX(answer_id) from answers));`
       )
-        .then((data)=>{
+        .then((data) => {
           return (pool.query(
             `INSERT INTO answers(body, answerer_name, answerer_email, question_id)
               VALUES ($1, $2, $3, $4)`
-            , [body, name, email, question_id]))
-          }
+            , [body, name, email, question_id])
+            .catch(err => console.error(err))
           )
+        }
+        )
         .then((data) => {
           for (let i = 0; i < photos.length; i++) {
             pool.query(
@@ -57,9 +59,9 @@ module.exports = {
               return (pool.query(
                 ` INSERT INTO photos(photos_url, answer_id)
                   VALUES ($1, (SELECT MAX(answer_id) from answers))`, [photos[i]])
-                  )
+              )
             })
-            .catch((err) => console.error(err));
+              .catch((err) => console.error(err));
           }
           resolve();
         })
