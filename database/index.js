@@ -1,5 +1,5 @@
 const {Pool, Client} = require('pg');
-const { password } = require('../config.js')
+const  password  = require('../config.js')
 
 const pool = new Pool({
   user: 'lunghaolee',
@@ -9,8 +9,6 @@ const pool = new Pool({
   port: 5432,
 })
 
-// pool.connect()
-// .then( console.log('\nConnected to PG!', '🐘🥜') )
-// .catch( err => console.log( err ));
+
 
 module.exports.pool = pool;
