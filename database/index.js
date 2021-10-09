@@ -3,10 +3,10 @@ const  password  = require('../config.js')
 
 const pool = new Pool({
   user: 'postgres',
-  host: 'sdc-postgres',
+  host: '3.133.95.11',
   database: 'qa',
   password: '90248',
-  port: 5432,
+  port: 3002,
 })
 
 // const pool = new Pool({
