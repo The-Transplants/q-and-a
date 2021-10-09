@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS qa;
 DROP TABLE IF EXISTS Questions cascade;
 DROP TABLE IF EXISTS Answers cascade;
 DROP TABLE IF EXISTS Photos cascade;
@@ -11,6 +12,10 @@ SET parallel_leader_participation = off;
 SET parallel_tuple_cost = 0;
 SET parallel_setup_cost = 0;
 SET min_parallel_table_scan_size = 0;
+
+CREATE DATABASE qa;
+
+\c qa;
 
 CREATE TABLE Questions(
   question_id SERIAL PRIMARY KEY,
@@ -49,9 +54,9 @@ CREATE TABLE Photos(
 CREATE INDEX photos_id_index ON photos(answer_id);
 
 
-\COPY Questions FROM '/Users/lunghaolee/Downloads/SDC Application Data - Atelier Project (_Clean_ Data Set) 2/questions.csv' DELIMITER ',' CSV HEADER;
-\COPY Answers FROM '/Users/lunghaolee/Downloads/SDC Application Data - Atelier Project (_Clean_ Data Set)/answers.csv' DELIMITER ',' CSV HEADER;
-\COPY Photos FROM '/Users/lunghaolee/Downloads/SDC Application Data - Atelier Project (_Clean_ Data Set) 2/answers_photos.csv' DELIMITER ',' CSV HEADER;
+COPY Questions FROM '/seed/questions.csv' DELIMITER ',' CSV HEADER;
+COPY Answers FROM '/seed/answers.csv' DELIMITER ',' CSV HEADER;
+COPY Photos FROM '/seed/answers_photos.csv' DELIMITER ',' CSV HEADER;
 
 
 

@@ -12,7 +12,7 @@ export const options = {
       timeUnit: '1s', // 1000 iterations per second, i.e. 1000 RPS
       duration: '30s',
       preAllocatedVUs: 1000, // how large the initial pool of VUs would be
-      maxVUs: 1200, // if the preAllocatedVUs are not enough, we can initialize more
+      maxVUs: 2000, // if the preAllocatedVUs are not enough, we can initialize more
     },
   },
   thresholds: {

@@ -3,6 +3,6 @@ const {sleep} = require('k6');
 
 
 export default function () {
-  http.get('http://localhost:3000/qa/questions/156318/answers');
+  http.get('http://ec2-3-144-80-220.us-east-2.compute.amazonaws.com/qa/questions/156318/answers');
   sleep(1);
 }
